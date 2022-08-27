@@ -17,6 +17,8 @@ async function loginUser(credentials) {
         }
         const data = await response.json();
         sessionStorage.setItem('token', data.token);
+        window.location.href = "/test";
+
         return true;
     });
 }

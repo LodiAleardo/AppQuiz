@@ -5,18 +5,15 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {
     ApolloClient,
-    ApolloLink,
     InMemoryCache,
     ApolloProvider,
-    HttpLink,
-    DefaultOptions,
     createHttpLink
 } from '@apollo/client';
 import {BrowserRouter} from "react-router-dom";
 import {setContext} from "@apollo/client/link/context";
 
 const root = ReactDOM.createRoot(
-    document.getElementById('root') as HTMLElement
+    document.getElementById('root')
 );
 
 const httpLink = createHttpLink({
