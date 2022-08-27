@@ -1,26 +1,33 @@
 import React from 'react';
-import logo from './logo.svg';
+
 import './App.css';
+import jwt_decode from "jwt-decode";
+import Routing from "./utilities/Routes";
+import {useNavigate} from "react-router-dom";
+
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    var isExpired = true;
+    const token = sessionStorage.getItem("token");
+    if (token !== null) {
+        const decoded: any = jwt_decode(token);
+        var dateNow = new Date();
+        const expiration = new Date(decoded.exp);
+        isExpired = false;
+        if (dateNow < expiration) {
+            isExpired = true;
+        }
+    }
+
+
+    if (window.location.pathname !== "/login" && isExpired) {
+        sessionStorage.removeItem('token');
+        return (<h1>Session ended, return to login page</h1>);
+    }
+
+    return (
+        <Routing/>
+    );
 }
 
 export default App;
