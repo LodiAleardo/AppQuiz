@@ -13,11 +13,7 @@ function Responses(props) {
         }
         return (<div></div>)
     }
-    if (isRandom) {
-        data = data?.map(value => ({value, sort: Math.random()}))
-            .sort((a, b) => a.sort - b.sort)
-            .map(({value}) => value)
-    }
+
     const risposte = data?.map((data) =>
         <div key={data.id}>{renderNumero()}<FormControlLabel control={<Radio/>}
                                                              label={data.testo}

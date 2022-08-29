@@ -110,16 +110,16 @@ function TestExecutor() {
 
             setName(data_graphql.testByID.nome);
             setQuestions(data_graphql.testByID.domande);
-            setQuestion(data_graphql.testByID.domande[0]);
+            randomizeAndSetQuestions(data_graphql.testByID.domande[0]);
             setCompleteData(data_graphql.testByID);
 
         }
     });
 
     const {ots_lad, ots_erro, ots_data} = useQuery(OLD_TEST_RUNS, {
-        variables: {user: "docentee"},
+        variables: {user: "docente"},
         onCompleted(ots_data) {
-            console.log(ots_data);
+            console.log(ots_data.testRuns.length);
             if(ots_data.testRuns.length == 0){
                 get_fresh_test_data().then(r => {});
                 mutateFunction().then(r => {});
@@ -131,8 +131,10 @@ function TestExecutor() {
             setOldResponses(maxGame.risposte);
 
             setName(maxGame.test.nome);
+
+
             setQuestions(maxGame.test.domande);
-            setQuestion(maxGame.test.domande[0]);
+            randomizeAndSetQuestions(maxGame.test.domande[0]);
             setCompleteData(maxGame.test);
 
             if (maxGame.id === 0) {
@@ -179,9 +181,24 @@ function TestExecutor() {
             }
         });
         setQuestionNumber(questionNumber + 1 % questions.length);
-        setQuestion(questions[questionNumber + 1 % questions.length]);
+        randomizeAndSetQuestions(questions[questionNumber + 1 % questions.length])
 
     }
+
+    function randomizeAndSetQuestions(question) {
+        console.log(question);
+        let domanda = structuredClone(question);
+        if (question.ordineCasuale) {
+            domanda.risposte = domanda.risposte.map(value => ({value, sort: Math.random()}))
+                .sort((a, b) => a.sort - b.sort)
+                .map(({value}) => value)
+        }
+
+        setQuestion(domanda);
+
+    }
+
+
 
     const renderNumeroDomanda = () => {
         if (completeData.domandeConNumero) {
