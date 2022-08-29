@@ -1,35 +1,29 @@
 import arrayShuffle from 'array-shuffle';
-import {Checkbox, FormControlLabel} from "@mui/material";
+import {Checkbox, FormControlLabel, Radio} from "@mui/material";
 
 function Responses(props) {
-    let state = props.state;
     let data = props.data.risposte;
+    let isRandom = props.isRandom;
     let numero = 0;
-    function handleChange(e) {
-        let isChecked = e.target.checked;
 
-        state[e.target.name] = e.target.checked;
-    }
-
-    const renderCheckBox = (isActive) => {
-        if(isActive){
-            return(<Checkbox defaultChecked/>)
-        }
-        return(<Checkbox />)
-    }
     const renderNumero = () => {
-        if(props.data.risposteConNumero){
+        if (props.data.risposteConNumero) {
             numero = numero + 1;
-            return(<b>{numero}. </b>)
+            return (<b>{numero}. </b>)
         }
-        return(<div></div>)
+        return (<div></div>)
     }
-
+    if (isRandom) {
+        data = data?.map(value => ({value, sort: Math.random()}))
+            .sort((a, b) => a.sort - b.sort)
+            .map(({value}) => value)
+    }
     const risposte = data?.map((data) =>
-        <div key={data.id}>{renderNumero()}<FormControlLabel control={renderCheckBox(state[data.id])}
-                          label={data.testo}
-                          name={data.id}
-                          onChange={e => handleChange(e)}/>
+        <div key={data.id}>{renderNumero()}<FormControlLabel control={<Radio/>}
+                                                             label={data.testo}
+                                                             name={data.id}
+                                                             value={data.id}
+        />{data.id}
         </div>
     );
 
