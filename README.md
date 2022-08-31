@@ -5,8 +5,6 @@
 
 #### Risultati (aspetta Nicola)
 
-#### CSS mobile
-
 #### Creazione test parte docente
 #### Create test
 

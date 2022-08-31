@@ -120,7 +120,7 @@ function TestExecutor() {
         variables: {user: "docente"},
         onCompleted(ots_data) {
             console.log(ots_data.testRuns.length);
-            if(ots_data.testRuns.length == 0){
+            if(ots_data.testRuns.length === 0){
                 get_fresh_test_data().then(r => {});
                 mutateFunction().then(r => {});
 

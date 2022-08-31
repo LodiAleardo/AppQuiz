@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import {gql, useQuery} from '@apollo/client';
-import {useNavigate} from "react-router-dom";
 import TestObject from "./TestObject";
 
 const GET_TESTS = gql`query tests {
