@@ -195,10 +195,7 @@ function TestExecutor() {
         }
 
         setQuestion(domanda);
-
     }
-
-
 
     const renderNumeroDomanda = () => {
         if (completeData.domandeConNumero) {

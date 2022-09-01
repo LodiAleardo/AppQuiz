@@ -51,7 +51,6 @@ function CreateTest() {
             setResponseWithNumber(false);
             setCasualOrder(false);
             setMaxValue(2);
-            console.log(question);
             setQuestion("");
 
         }
@@ -64,9 +63,13 @@ function CreateTest() {
 
     function openModalErrorsOrContinue() {
         let empty_response = response.some(item => item.text === "");
-        console.log(question);
+        let empty_value = true;
 
-        if (!question || empty_response) {
+        for(var i in response){
+            if(response[i].value === "1") empty_value = false;
+        }
+
+        if (!question || empty_response || empty_value) {
             setModalErrorState(true);
             return;
         }
@@ -108,6 +111,14 @@ function CreateTest() {
         setMaxValue(maxValue + 1);
     }
 
+    const renderButtonSendTest = () => {
+        if (listDomande.length === 0) {
+            return (<div></div>)
+        }
+        return (<div><Button variant="contained" onClick={() => openModalCloseEditing()}>Pubblica il test</Button></div>)
+    }
+
+
     function renderRisposte() {
 
         return response.map((data) =>
@@ -144,12 +155,12 @@ function CreateTest() {
                            onChange={e => setQuestion(e.target.value)}/>
                 <FormControlLabel control={<Checkbox/>}
                                   label="Ordine casuale"
-                                  value={ordineCasuale}
+                                  checked={ordineCasuale}
                                   onChange={e => setCasualOrder(!ordineCasuale)}
                 />
                 <FormControlLabel control={<Checkbox/>}
                                   label="Risposte con numero"
-                                  value={risposteConNumero}
+                                  checked={risposteConNumero}
                                   onChange={e => setResponseWithNumber(!risposteConNumero)}/>
 
 
@@ -164,7 +175,8 @@ function CreateTest() {
             <br/><br/><br/>
             <div>
                 <Button variant="contained" onClick={() => openModalErrorsOrContinue()}>Save and continue</Button><br/><br/>
-                <Button variant="contained" onClick={() => openModalCloseEditing()}>Pubblica il test</Button><br/><br/>
+                {/*<Button variant="contained" onClick={() => openModalCloseEditing()}>Pubblica il test</Button><br/><br/>*/}
+                {renderButtonSendTest()}
             </div>
 
         </div>

@@ -31,7 +31,7 @@ function CreateResponse(props) {
             <TextField id="outlined-number"
                        value={valueResponse}
                        onChange={e => setResponseValue(e.target.value)}
-                       InputProps={{inputProps: {min: 0, max: 10}}}
+                       InputProps={{inputProps: {min: 0, max: 1}}}
                        alabel="Punteggio"
                        type="number"/></div>
     );
