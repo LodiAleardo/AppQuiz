@@ -64,6 +64,12 @@ const RISPONDI = gql`mutation rispondi ($test: ID!, $risposte: [ID!]!) {
                         }
                     }`;
 
+const TERMINA = gql`mutation termina ($test: ID!) {
+    termina (test: $test) {
+        id
+    }
+}`;
+
 
 function FormContro(props) {
     return null;
@@ -92,6 +98,13 @@ function TestExecutor() {
         }
     });
 
+    const [mutateTermina, {error_termina, loading_termina, data_termina}] = useMutation(TERMINA, {
+        variables: {ID},
+        onCompleted(data_mutation) {
+            window.location.href = "/risultati/" + ID;
+        }
+    });
+
     const [mutateResponse, {error_response, loading_response, data_response}] = useMutation(RISPONDI, {
         variables: {
             test: ID,
@@ -109,9 +122,11 @@ function TestExecutor() {
         onCompleted(data_graphql) {
 
             setName(data_graphql.testByID.nome);
-            setQuestions(data_graphql.testByID.domande);
-            randomizeAndSetQuestions(data_graphql.testByID.domande[0]);
-            setCompleteData(data_graphql.testByID);
+            let single_test_data = structuredClone(data_graphql.testByID);
+
+            single_test_data.domande = randomizeAndSetQuestions(single_test_data);
+            randomizeAndSetResponses(single_test_data.domande[0]);
+            setCompleteData(single_test_data);
 
         }
     });
@@ -119,38 +134,39 @@ function TestExecutor() {
     const {ots_lad, ots_erro, ots_data} = useQuery(OLD_TEST_RUNS, {
         variables: {user: "docente"},
         onCompleted(ots_data) {
-            console.log(ots_data.testRuns.length);
-            if(ots_data.testRuns.length === 0){
-                get_fresh_test_data().then(r => {});
-                mutateFunction().then(r => {});
+            if (ots_data.testRuns.length === 0) {
+                get_fresh_test_data().then(r => {
+                });
+                mutateFunction().then(r => {
+                });
 
                 return;
             }
-            let maxGame = ots_data.testRuns.reduce((max, game) => max.dataInizio > game.dataInizio ? max : game);
-            setID(maxGame.id);
-            setOldResponses(maxGame.risposte);
 
-            setName(maxGame.test.nome);
+            var tmp_arr = ots_data.testRuns.filter(t => t.test.nome === nome && t.test.data === data);
+            tmp_arr = tmp_arr.reduce((max, game) => max.dataInizio > game.dataInizio ? max : game);
+            
+            let single_test_data = structuredClone(tmp_arr);
+            setID(single_test_data.id);
+            setOldResponses(single_test_data.risposte);
 
 
-            setQuestions(maxGame.test.domande);
-            randomizeAndSetQuestions(maxGame.test.domande[0]);
-            setCompleteData(maxGame.test);
+            single_test_data.test.domande = [...randomizeAndSetQuestions(single_test_data.test)];
+            randomizeAndSetResponses(single_test_data.test.domande[0]);
+            setCompleteData(single_test_data.test);
 
-            if (maxGame.id === 0) {
+            if (single_test_data.id === 0) {
                 console.log("Qualcosa")
             }
 
-            maxGame.test.domande[0].risposte.forEach((risposta, index) => {
-                if (maxGame.risposte.includes(risposta.id)) {
+            single_test_data.test.domande[0].risposte.forEach((risposta, index) => {
+                if (single_test_data.risposte.includes(risposta.id)) {
                     setValue(risposta.id.toString());
                 }
             });
 
-
         }
     });
-
 
     function handleSubmit(e) {
         e.preventDefault();
@@ -175,18 +191,28 @@ function TestExecutor() {
             });
         }
 
+        if(questionNumber + 1 === questions.length){
+            mutateTermina({
+                variables: {
+                    test: ID,
+                },
+            }).then(r => {
+            });
+            return;
+        }
+
+
         questions[questionNumber + 1].risposte.forEach((risposta, index) => {
             if (risposte.includes(risposta.id)) {
                 setValue(risposta.id.toString());
             }
         });
-        setQuestionNumber(questionNumber + 1 % questions.length);
-        randomizeAndSetQuestions(questions[questionNumber + 1 % questions.length])
+        setQuestionNumber(questionNumber + 1 );
+        setQuestion(questions[questionNumber + 1])
 
     }
 
-    function randomizeAndSetQuestions(question) {
-        console.log(question);
+    function randomizeAndSetResponses(question) {
         let domanda = structuredClone(question);
         if (question.ordineCasuale) {
             domanda.risposte = domanda.risposte.map(value => ({value, sort: Math.random()}))
@@ -195,6 +221,19 @@ function TestExecutor() {
         }
 
         setQuestion(domanda);
+    }
+
+    function randomizeAndSetQuestions(question) {
+        let domande = structuredClone(question.domande);
+
+        if (question.ordineCasuale) {
+            domande = domande.map(value => ({value, sort: Math.random()}))
+                .sort((a, b) => a.sort - b.sort)
+                .map(({value}) => value)
+        }
+
+        setQuestions(domande);
+        return domande;
     }
 
     const renderNumeroDomanda = () => {

@@ -22,7 +22,7 @@ function ListTests() {
         <div>
             <h1>Test list</h1>
             <TestObject data={testsListData.tests}/>
-
+            <a href="/create_test">Crea un test</a>
         </div>
     );
 

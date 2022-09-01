@@ -3,7 +3,7 @@ import {Checkbox, FormControlLabel, Radio} from "@mui/material";
 
 function Responses(props) {
     let data = props.data.risposte;
-    let isRandom = props.isRandom;
+    let isRandom = props.isRandom || false;
     let numero = 0;
 
     const renderNumero = () => {
@@ -19,7 +19,8 @@ function Responses(props) {
                                                              label={data.testo}
                                                              name={data.id}
                                                              value={data.id}
-        />{data.id}
+
+        />
         </div>
     );
 
