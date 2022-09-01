@@ -8,6 +8,7 @@ import CreateModalsErrors from "./CreateTestModalError";
 import {gql, useMutation} from "@apollo/client";
 import {v4 as uuidv4} from 'uuid';
 import CreateTestModalClose from "./CreateTestModalClose";
+import checkIfLoggedIn from "../UserState";
 
 const CREA_DOMANDA = gql`mutation creaDomanda ($domanda: DomandaInput!) {
                             creaDomanda (domanda: $domanda) {
@@ -25,6 +26,12 @@ const CREA_DOMANDA = gql`mutation creaDomanda ($domanda: DomandaInput!) {
                         }`;
 
 function CreateTest() {
+    const state = checkIfLoggedIn();
+    if(!state.docente) {
+        sessionStorage.removeItem('token');
+        window.location.href = "/login";
+    }
+
     const [listDomande, setListaDomande] = useState([])
 
     const [question, setQuestion] = useState("")

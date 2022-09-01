@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {gql, useQuery} from '@apollo/client';
 import TestObject from "./TestObject";
+import checkIfLoggedIn from "../UserState";
 
 const GET_TESTS = gql`query tests {
     tests {
@@ -18,11 +19,19 @@ function ListTests() {
     if (loading) return null;
     if (error) return `Error! ${error}`;
 
+    function createTestButton() {
+        const state = checkIfLoggedIn();
+        console.log(state)
+        if(!state.docente) return (<div></div>)
+
+        return (<a href="/create_test">Crea un test</a>)
+    }
+
     return (
         <div>
             <h1>Test list</h1>
             <TestObject data={testsListData.tests}/>
-            <a href="/create_test">Crea un test</a>
+            {createTestButton()}
         </div>
     );
 

@@ -25,7 +25,9 @@ const GET_RISULTATO = gql`query risultati ($id: ID) {
     }
 }`;
 
-function RisultatoTest() {
+function RisultatoTest({position}) {
+    const {state} = useParams()
+    console.log(position);
     const [testData, setTestsData] = useState({})
     const {ID} = useParams()
 
