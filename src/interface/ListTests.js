@@ -18,9 +18,6 @@ function ListTests() {
     if (loading) return null;
     if (error) return `Error! ${error}`;
 
-    console.log(testsListData.tests);
-
-
     return (
         <div>
             <h1>Test list</h1>

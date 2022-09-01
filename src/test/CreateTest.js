@@ -45,41 +45,20 @@ function CreateTest() {
         onCompleted(data_cd) {
             console.log(data_cd);
             setListaDomande([...listDomande, data_cd.creaDomanda.nome]);
+            setResponse([{"text": "", "id": 0, "value": 0},
+                {"text": "", "id": 1, "value": 0}]);
+            setCasualOrder(false);
+            setResponseWithNumber(false);
+            setCasualOrder(false);
+            setMaxValue(2);
+            console.log(question);
+            setQuestion("");
+
         }
     });
 
     function openModalCloseEditing() {
-        // let empty_response = response.some(item => item.text === "");
-        // console.log(question);
-        //
-        // if (!question || empty_response) {
-        //     setModalErrorState(true);
-        //     return;
-        // }
-        // let risposte = []
-        // for (var i in response) {
-        //     risposte.push({
-        //         "testo": response[i].text,
-        //         "punteggio": response[i].value
-        //     });
-        // }
-        //
-        // creaDomanda({
-        //     variables: {
-        //         "domanda": {
-        //             "nome": uuidv4(),
-        //             "testo": question.toString(),
-        //             "punti": 1,
-        //             "ordineCasuale": ordineCasuale,
-        //             "risposteConNumero": risposteConNumero,
-        //             "risposte": risposte
-        //         }
-        //     },
-        // }).then(r => {
-        // });
-
         setModalCloseState(true);
-
     }
 
 
@@ -113,14 +92,6 @@ function CreateTest() {
         }).then(r => {
         });
 
-        setResponse([{"text": "", "id": 0, "value": 0},
-            {"text": "", "id": 1, "value": 0}]);
-        setCasualOrder(false);
-        setResponseWithNumber(false);
-        setCasualOrder(false);
-        setMaxValue(2);
-        console.log(question);
-        setQuestion("");
 
     }
 
@@ -154,7 +125,9 @@ function CreateTest() {
     return (
         <div>
             <CreateModalsErrors data={modalErrorState} triggerClose={handleCloseModalErrors}/>
-            <CreateTestModalClose data={modalCloseState} triggerClose={handleCloseModalState}/>
+            <CreateTestModalClose data={modalCloseState}
+                                  triggerClose={handleCloseModalState}
+                                  domande={listDomande}/>
             <div>Crea le domande</div>
             <Box
                 component="form"
@@ -173,7 +146,6 @@ function CreateTest() {
                                   label="Ordine casuale"
                                   value={ordineCasuale}
                                   onChange={e => setCasualOrder(!ordineCasuale)}
-
                 />
                 <FormControlLabel control={<Checkbox/>}
                                   label="Risposte con numero"
@@ -192,7 +164,7 @@ function CreateTest() {
             <br/><br/><br/>
             <div>
                 <Button variant="contained" onClick={() => openModalErrorsOrContinue()}>Save and continue</Button><br/><br/>
-                <Button variant="contained" onClick={() => openModalCloseEditing()}>Save and publish test</Button><br/><br/>
+                <Button variant="contained" onClick={() => openModalCloseEditing()}>Pubblica il test</Button><br/><br/>
             </div>
 
         </div>

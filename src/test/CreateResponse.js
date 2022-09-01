@@ -1,4 +1,3 @@
-import arrayShuffle from 'array-shuffle';
 import {Checkbox, FormControlLabel, Radio, TextField} from "@mui/material";
 import React, {useState} from "react";
 
@@ -7,8 +6,6 @@ function CreateResponse(props) {
     const [response, setResponse] = useState(data["text"]);
     const [valueResponse, setValueResponse] = useState(data["value"]);
 
-    if(response!==data["text"]) setResponse(data["text"]);
-    if(valueResponse!==data["value"]) setResponse(data["value"]);
 
     function setResponseText(val) {
         data["text"] = val;
@@ -19,6 +16,9 @@ function CreateResponse(props) {
         data["value"] = val;
         setValueResponse(val);
     }
+
+    if(response!==data["text"]) setResponseText(data["text"]);
+    if(valueResponse!==data["value"]) setResponseValue(data["value"]);
 
     return (
         <div  style={{display: 'inline'}}>
