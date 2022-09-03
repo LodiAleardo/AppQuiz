@@ -4,6 +4,7 @@ import React, {useState} from "react";
 import Responses from "./Responses";
 import {Button, FormControl, FormControlLabel, FormGroup, FormLabel, Radio, RadioGroup} from "@mui/material";
 import * as PropTypes from "prop-types";
+import checkIfLoggedIn from "../UserState";
 
 const OLD_TEST_RUNS = gql`query testRuns ($user: String) {
                             testRuns (user: $user) {
@@ -130,10 +131,11 @@ function TestExecutor() {
 
         }
     });
-
     const {ots_lad, ots_erro, ots_data} = useQuery(OLD_TEST_RUNS, {
-        variables: {user: "docente"},
+        variables: {user: checkIfLoggedIn().sub},
         onCompleted(ots_data) {
+            console.log(ots_data);
+
             if (ots_data.testRuns.length === 0) {
                 get_fresh_test_data().then(r => {
                 });

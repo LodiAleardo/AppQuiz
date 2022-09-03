@@ -50,14 +50,23 @@ function RisultatoTest({position}) {
         return (<h1>Hai ricevuto {sum} su {total}</h1>)
     }
 
+    function RispostaCorrettaOMeno(data, corrette) {
+        if(corrette.includes(data)){
+            return (<span style={{backgroundColor: "#90ee90"}}>Risposta corretta</span>);
+        }
+        return (<span style={{backgroundColor: "red"}}>Risposta errata</span>);
+    }
+
+
     const risposte = data.risultati?.map((data) =>
-        <div key={data.domanda.nome}>{data.domanda.testo}
+        <div key={data.domanda.nome}>{data.domanda.testo} {RispostaCorrettaOMeno(data.date[0], data.corrette)}
             <RadioGroup
                 aria-labelledby="demo-controlled-radio-buttons-group"
                 name="controlled-radio-buttons-group"
                 value={data.date[0]}>
 
-                <Responses data={data.domanda}/>
+                <Responses data={data.domanda} corrette={data.corrette}/>
+
             </RadioGroup>
             <br/>
         </div>
