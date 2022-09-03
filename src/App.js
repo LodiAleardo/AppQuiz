@@ -19,21 +19,21 @@ function App() {
 
     return (
         <div>
-            <AppBar>
+            <AppBar position="static" color="primary">
                 <Toolbar>
-
-                    <Typography variant="h6" component="div" sx={{flexGrow: 1}}>
+                    <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1 }}>
                         Test suite
                     </Typography>
-
                     {renderState()}
 
                 </Toolbar>
+
             </AppBar>
-            <Routing state="Ciao" />
+
+            <Routing />
+
         </div>
-    )
-        ;
+    );
 }
 
 export default App;

@@ -144,8 +144,18 @@ function TestExecutor() {
             }
 
             var tmp_arr = ots_data.testRuns.filter(t => t.test.nome === nome && t.test.data === data);
+            if (tmp_arr.length === 0) {
+                get_fresh_test_data().then(r => {
+                });
+                mutateFunction().then(r => {
+                });
+
+                return;
+            }
+
             tmp_arr = tmp_arr.reduce((max, game) => max.dataInizio > game.dataInizio ? max : game);
-            
+            console.log(tmp_arr)
+
             let single_test_data = structuredClone(tmp_arr);
             setID(single_test_data.id);
             setOldResponses(single_test_data.risposte);

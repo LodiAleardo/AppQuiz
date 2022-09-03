@@ -39,8 +39,6 @@ function CreateTestModalClose(props) {
     });
 
     const sendDataAndClose = function (e) {
-        alert('it works!');
-        console.log(props.domande)
         e.preventDefault();
         creaTest({
             variables: {
@@ -93,8 +91,6 @@ function CreateTestModalClose(props) {
 
                     />
                     <br/>
-                    <br/>
-                    <TextField id="filled-basic" type="number" required label="Punti" variant="filled"/>
                     <br/>
                     <Button type="submit" variant="outlined">
                         Save

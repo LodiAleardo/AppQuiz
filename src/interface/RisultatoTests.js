@@ -27,7 +27,6 @@ const GET_RISULTATO = gql`query risultati ($id: ID) {
 
 function RisultatoTest({position}) {
     const {state} = useParams()
-    console.log(position);
     const [testData, setTestsData] = useState({})
     const {ID} = useParams()
 
@@ -35,7 +34,6 @@ function RisultatoTest({position}) {
         variables: {"id": ID},
         onCompleted(data) {
             setTestsData(data)
-            console.log(data);
         }
     });
     if (loading) return null;
@@ -53,7 +51,7 @@ function RisultatoTest({position}) {
     }
 
     const risposte = data.risultati?.map((data) =>
-        <div>{data.domanda.testo}
+        <div key={data.domanda.nome}>{data.domanda.testo}
             <RadioGroup
                 aria-labelledby="demo-controlled-radio-buttons-group"
                 name="controlled-radio-buttons-group"
