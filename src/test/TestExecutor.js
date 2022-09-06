@@ -2,7 +2,7 @@ import {useParams} from "react-router-dom";
 import {gql, useLazyQuery, useMutation, useQuery} from "@apollo/client";
 import React, {useState} from "react";
 import Responses from "./Responses";
-import {Button, FormControl, FormControlLabel, FormGroup, FormLabel, Radio, RadioGroup} from "@mui/material";
+import {Box, Button, FormControl, FormControlLabel, FormGroup, FormLabel, Radio, RadioGroup} from "@mui/material";
 import * as PropTypes from "prop-types";
 import checkIfLoggedIn from "../UserState";
 
@@ -263,7 +263,22 @@ function TestExecutor() {
     if (ots_lad) return 'Loading...';
 
     return (
-        <div>
+        <Box component="div" display="flex" flexDirection="column" alignItems="stretch" padding={1}
+             sx={{
+                 // boxShadow: 3,
+                 // width: '25%',
+                 // height: '25%',
+                 bgcolor: (theme) => (theme.palette.mode === 'dark' ? '#101010' : '#fff'),
+                 color: (theme) =>
+                     theme.palette.mode === 'dark' ? 'grey.300' : 'grey.800',
+                 p: 1,
+                 m: 2,
+                 borderRadius: 2,
+                 textAlign: 'left',
+                 //     fontSize: '0.875rem',
+                 //     fontWeight: '700',
+             }}
+        >
             <h1>{name}</h1>
             {/*<h3>{renderNumeroDomanda()}{question.testo}</h3>*/}
             {/*<form onSubmit={handleSubmit}>*/}
@@ -290,7 +305,7 @@ function TestExecutor() {
 
             {/*</form>*/}
 
-        </div>
+        </Box>
     );
 
 }
