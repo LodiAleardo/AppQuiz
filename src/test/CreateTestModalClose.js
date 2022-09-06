@@ -68,8 +68,19 @@ function CreateTestModalClose(props) {
 
                 <Box sx={style}>
                     <Typography id="modal-modal-title" variant="h6" component="h2">
-                        Inserisci il nome del test e il punteggio massimo. La domanda non verrá salvata
+                        Inserisci il nome del test e il punteggio massimo. Questa domanda non verrá salvata.
                     </Typography>
+                    <br/>
+                    <TextField id="filled-basic"
+                               type="text"
+                               required
+                               fullWidth
+                               label="Nome del test"
+                               variant="filled"
+                               value={nomeDelTest}
+                               onChange={e => setNomeDelTest(e.target.value)}
+                    />
+
                     <FormControlLabel control={<Checkbox/>}
                                       label="Ordine casuale delle domande"
                                       value={ordineCasuale}
@@ -81,19 +92,10 @@ function CreateTestModalClose(props) {
                                       onChange={e => setDomandeConNumero(!domandeConNumero)}
                     />
 
-                    <TextField id="filled-basic"
-                               type="text"
-                               required
-                               label="Nome del test"
-                               variant="filled"
-                               value={nomeDelTest}
-                               onChange={e => setNomeDelTest(e.target.value)}
-
-                    />
                     <br/>
                     <br/>
                     <Button type="submit" variant="outlined">
-                        Save
+                        Salva e pubblica il test
                     </Button>
 
                 </Box>

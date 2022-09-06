@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
 import {gql, useQuery} from '@apollo/client';
 import TestObject from "./TestObject";
-import {useParams} from "react-router-dom";
+import {Link, useParams} from "react-router-dom";
 import Responses from "../test/Responses";
-import {FormControlLabel, Radio, RadioGroup} from "@mui/material";
+import {Box, Button, FormControlLabel, Grid, Radio, RadioGroup} from "@mui/material";
 
 const GET_RISULTATO = gql`query risultati ($id: ID) {
     risultati (id: $id) {
@@ -42,7 +42,7 @@ function RisultatoTest({position}) {
     function punteggioTotale() {
         var sum = 0;
         var total = 0;
-        for (let i = 0; i < data.risultati.length; i ++) {
+        for (let i = 0; i < data.risultati.length; i++) {
             sum = sum + parseFloat(data.risultati[i].punteggio);
             total = total + parseFloat(data.risultati[i].domanda.punti);
         }
@@ -51,15 +51,33 @@ function RisultatoTest({position}) {
     }
 
     function RispostaCorrettaOMeno(data, corrette) {
-        if(corrette.includes(data)){
-            return (<span style={{backgroundColor: "#90ee90"}}>Risposta corretta</span>);
+        if (corrette.includes(data)) {
+            return (<h4><span style={{backgroundColor: "#90ee90"}}>Risposta corretta</span></h4>);
         }
-        return (<span style={{backgroundColor: "red"}}>Risposta errata</span>);
+        return (<h4><span style={{backgroundColor: "red"}}>Risposta errata</span></h4>);
     }
 
 
     const risposte = data.risultati?.map((data) =>
-        <div key={data.domanda.nome}>{data.domanda.testo} {RispostaCorrettaOMeno(data.date[0], data.corrette)}
+        <Box component="div"
+             display="flex"
+             justifyContent="center"
+             flexDirection="column"
+             alignItems="stretch"
+             padding={2}
+             key={data.domanda.nome}
+        >
+
+
+            <Grid container spacing={2}>
+                <Grid item xs={"auto"}>
+                    <h3>{data.domanda.testo}</h3>
+                </Grid>
+                <Grid item xs={"auto"}>
+                    {RispostaCorrettaOMeno(data.date[0], data.corrette)}
+                </Grid>
+            </Grid>
+
             <RadioGroup
                 aria-labelledby="demo-controlled-radio-buttons-group"
                 name="controlled-radio-buttons-group"
@@ -69,7 +87,7 @@ function RisultatoTest({position}) {
 
             </RadioGroup>
             <br/>
-        </div>
+        </Box>
     );
 
 
@@ -79,8 +97,18 @@ function RisultatoTest({position}) {
             <div>
                 {risposte}
             </div>
+            <Box component="div"
+                 display="flex"
+                 justifyContent="center"
+                 flexDirection="column"
+                 // alignItems="stretch"
+                 padding={2}
+            >
 
-            <a href="/test">Return to homepage</a>
+                <Button component={Link} to="/test" variant="outlined" color="primary">
+                    Ritorna alla lista dei test
+                </Button>
+            </Box>
         </div>
     );
 

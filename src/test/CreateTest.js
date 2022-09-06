@@ -1,6 +1,6 @@
 import {useParams} from "react-router-dom";
 import React, {useState} from "react";
-import {Box, Button, Checkbox, FormControlLabel, IconButton, TextField} from "@mui/material";
+import {Box, Button, Checkbox, FormControlLabel, Grid, IconButton, TextField} from "@mui/material";
 import CreateResponse from "./CreateResponse";
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 import AddIcon from '@mui/icons-material/Add';
@@ -9,6 +9,7 @@ import {gql, useMutation} from "@apollo/client";
 import {v4 as uuidv4} from 'uuid';
 import CreateTestModalClose from "./CreateTestModalClose";
 import checkIfLoggedIn from "../UserState";
+import * as PropTypes from "prop-types";
 
 const CREA_DOMANDA = gql`mutation creaDomanda ($domanda: DomandaInput!) {
                             creaDomanda (domanda: $domanda) {
@@ -25,9 +26,15 @@ const CREA_DOMANDA = gql`mutation creaDomanda ($domanda: DomandaInput!) {
                             }
                         }`;
 
+function Item(props) {
+    return null;
+}
+
+Item.propTypes = {children: PropTypes.node};
+
 function CreateTest() {
     const state = checkIfLoggedIn();
-    if(!state.docente) {
+    if (!state.docente) {
         sessionStorage.removeItem('token');
         window.location.href = "/login";
     }
@@ -72,8 +79,8 @@ function CreateTest() {
         let empty_response = response.some(item => item.text === "");
         let empty_value = true;
 
-        for(var i in response){
-            if(response[i].value === "1") empty_value = false;
+        for (var i in response) {
+            if (response[i].value === "1") empty_value = false;
         }
 
         if (!question || empty_response || empty_value) {
@@ -122,21 +129,23 @@ function CreateTest() {
         if (listDomande.length === 0) {
             return (<div></div>)
         }
-        return (<div><Button variant="contained" onClick={() => openModalCloseEditing()}>Pubblica il test</Button></div>)
+        return (
+            <Button color="success" variant="contained" onClick={() => openModalCloseEditing()}>Pubblica il test</Button>)
     }
 
 
     function renderRisposte() {
 
         return response.map((data) =>
-            <div key={data.id}>
-                <CreateResponse data={data}/>
-                <IconButton size="small" onClick={() => {
-                    removeRow(data.id)
-                }}>
-                    <RemoveCircleOutlineIcon fontSize="small"/>
-                </IconButton>
-            </div>
+            <Box component="div"
+                 display="flex"
+                 justifyContent="center"
+                 flexDirection="column"
+                 key={data.id}
+            >
+
+                <CreateResponse data={data} function={removeRow}/>
+            </Box>
         );
     }
 
@@ -146,45 +155,84 @@ function CreateTest() {
             <CreateTestModalClose data={modalCloseState}
                                   triggerClose={handleCloseModalState}
                                   domande={listDomande}/>
-            <div>Crea le domande</div>
+            <h1>Crea le domande</h1>
             <Box
                 component="form"
-                // sx={{
-                //     '& > :not(style)': {m: 1, width: '50%'},
-                // }}
                 noValidate
                 autoComplete="off"
+                sx={{
+                    boxShadow: 3,
+                    width: 'auto',
+                    p: 2,
+                    m: 3,
+                    borderRadius: 2,
+                }}
+
             >
-                <TextField id="outlined-basic"
-                           label="Question"
-                           variant="outlined"
-                           value={question}
-                           onChange={e => setQuestion(e.target.value)}/>
-                <FormControlLabel control={<Checkbox/>}
-                                  label="Ordine casuale"
-                                  checked={ordineCasuale}
-                                  onChange={e => setCasualOrder(!ordineCasuale)}
-                />
-                <FormControlLabel control={<Checkbox/>}
-                                  label="Risposte con numero"
-                                  checked={risposteConNumero}
-                                  onChange={e => setResponseWithNumber(!risposteConNumero)}/>
+                <Grid container spacing={2}>
+                    <Grid item xs={8}>
+                        <TextField id="outlined-basic"
+                                   label="Domanda"
+                                   variant="outlined"
+                                   fullWidth
+                                   value={question}
+                                   onChange={e => setQuestion(e.target.value)}/>
+                    </Grid>
+                    <Grid item xs={4}>
+                        <Grid container spacing={2}>
+                            <Grid item xs={12}>
+                                <FormControlLabel control={<Checkbox/>}
+                                                  label="Ordine casuale"
+                                                  checked={ordineCasuale}
+                                                  onChange={e => setCasualOrder(!ordineCasuale)}
+                                />
+                            </Grid>
+                            <Grid item xs={12}>
+                                <FormControlLabel control={<Checkbox/>}
+                                                  label="Risposte con numero"
+                                                  checked={risposteConNumero}
+                                                  onChange={e => setResponseWithNumber(!risposteConNumero)}/>
+
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                </Grid>
 
 
+                {/*<br/>*/}
+
+
+                <br/>
+                {renderRisposte()}
+
+                <Box margin={2}>
+                    <IconButton size="small" onClick={() => {
+                        addRow()
+                    }}>Aggiungi una nuova risposta
+                        <AddIcon fontSize="small"/>
+                    </IconButton>
+                </Box>
+                <br/>
+
+                <div>
+                    <Box component="div"
+                         display="flex"
+                         justifyContent="center"
+                         flexDirection="column"
+                        // alignItems="stretch"
+                         padding={2}
+                    >
+
+                        <Button variant="contained" onClick={() => openModalErrorsOrContinue()}>Save and
+                            continue</Button>
+
+                        <br/><br/>
+                        {renderButtonSendTest()}
+
+                    </Box>
+                </div>
             </Box>
-            {renderRisposte()}
-            <IconButton size="small" onClick={() => {
-                addRow()
-            }}>
-                <AddIcon fontSize="small"/>
-            </IconButton>
 
-            <br/><br/><br/>
-            <div>
-                <Button variant="contained" onClick={() => openModalErrorsOrContinue()}>Save and continue</Button><br/><br/>
-                {/*<Button variant="contained" onClick={() => openModalCloseEditing()}>Pubblica il test</Button><br/><br/>*/}
-                {renderButtonSendTest()}
-            </div>
 
         </div>
 

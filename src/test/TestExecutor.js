@@ -203,7 +203,7 @@ function TestExecutor() {
             });
         }
 
-        if(questionNumber + 1 === questions.length){
+        if (questionNumber + 1 === questions.length) {
             mutateTermina({
                 variables: {
                     test: ID,
@@ -219,7 +219,7 @@ function TestExecutor() {
                 setValue(risposta.id.toString());
             }
         });
-        setQuestionNumber(questionNumber + 1 );
+        setQuestionNumber(questionNumber + 1);
         setQuestion(questions[questionNumber + 1])
 
     }
@@ -263,35 +263,45 @@ function TestExecutor() {
     if (ots_lad) return 'Loading...';
 
     return (
-        <Box component="div" display="flex" flexDirection="column" alignItems="stretch" padding={1}
+        <Box component="div" display="flex" justifyContent="center" flexDirection="column" alignItems="stretch"
+             padding={1}
              sx={{
-                 // boxShadow: 3,
-                 // width: '25%',
+                 boxShadow: 3,
+                 width: 'auto',
                  // height: '25%',
                  bgcolor: (theme) => (theme.palette.mode === 'dark' ? '#101010' : '#fff'),
                  color: (theme) =>
                      theme.palette.mode === 'dark' ? 'grey.300' : 'grey.800',
-                 p: 1,
-                 m: 2,
+                 p: 2,
+                 m: 3,
                  borderRadius: 2,
                  textAlign: 'left',
+
                  //     fontSize: '0.875rem',
                  //     fontWeight: '700',
              }}
         >
             <h1>{name}</h1>
-            {/*<h3>{renderNumeroDomanda()}{question.testo}</h3>*/}
-            {/*<form onSubmit={handleSubmit}>*/}
+
             <FormControl onSubmit={handleSubmit}>
                 <FormLabel>{renderNumeroDomanda()}{question.testo}</FormLabel>
-                <RadioGroup
-                    aria-labelledby="demo-controlled-radio-buttons-group"
-                    name="controlled-radio-buttons-group"
-                    value={value}
-                    onChange={handleChange}
+                <Box component="div"
+                     display="flex"
+                     justifyContent="center"
+                     flexDirection="column"
+                     alignItems="stretch"
+                     padding={2}
                 >
-                    <Responses data={question} isRandom={question.ordineCasuale}/>
-                </RadioGroup>
+
+                    <RadioGroup
+                        aria-labelledby="demo-controlled-radio-buttons-group"
+                        name="controlled-radio-buttons-group"
+                        value={value}
+                        onChange={handleChange}
+                    >
+                        <Responses data={question} isRandom={question.ordineCasuale}/>
+                    </RadioGroup>
+                </Box>
             </FormControl>
 
             <br/>

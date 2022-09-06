@@ -2,7 +2,8 @@ import React, {useState} from 'react';
 import {gql, useQuery} from '@apollo/client';
 import TestObject from "./TestObject";
 import checkIfLoggedIn from "../UserState";
-import {Box} from "@mui/material";
+import {Box, Button, Grid} from "@mui/material";
+import {Link} from "react-router-dom";
 
 const GET_TESTS = gql`query tests {
     tests {
@@ -25,7 +26,10 @@ function ListTests() {
         console.log(state)
         if (!state.docente) return (<div></div>)
 
-        return (<a href="/create_test">Crea un test</a>)
+        return (
+            <Button component={Link} to="/create_test" variant="contained" color="primary">
+                Crea un test
+            </Button>)
     }
 
     return (
@@ -47,9 +51,24 @@ function ListTests() {
         >
 
             <div>
-                <h1>Test list</h1>
+                <Grid container spacing={2}>
+                    <Grid item xs={8}>
+                        <h1>Test list</h1>
+                    </Grid>
+                    <Grid item xs={4} justifyContent="flex-end">
+
+                        <Box display="flex" justifyContent="flex-end">
+                            {createTestButton()}
+                        </Box>
+
+                    </Grid>
+                </Grid>
+
+
+
+
                 <TestObject data={testsListData.tests}/>
-                {createTestButton()}
+
             </div>
         </Box>
     );
