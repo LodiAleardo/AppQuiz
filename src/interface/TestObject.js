@@ -7,7 +7,7 @@ function TestObject(props) {
 
 
     var listItems = data.map((data) =>
-        <section style={{display: "contents"}}>
+        <section style={{display: "contents"}} key={data.nome}>
             <Grid item xs={8}>
                 <Box m={2}>
                     Test name: <strong>{data.nome}</strong> created in data: <strong>{data.data}</strong>

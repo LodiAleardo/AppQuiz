@@ -299,7 +299,7 @@ function TestExecutor() {
                         value={value}
                         onChange={handleChange}
                     >
-                        <Responses data={question} isRandom={question.ordineCasuale}/>
+                        <Responses data={question} isRandom={question?.ordineCasuale}/>
                     </RadioGroup>
                 </Box>
             </FormControl>

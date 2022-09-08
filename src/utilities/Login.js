@@ -73,7 +73,7 @@ function Login() {
 
                     <div>
                         <br/>
-                        <Button type="submit" variant="contained">Contained</Button>
+                        <Button type="submit" variant="contained">Log in</Button>
                     </div>
                 </form>
             </div>

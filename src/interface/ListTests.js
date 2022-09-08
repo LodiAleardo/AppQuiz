@@ -13,9 +13,11 @@ const GET_TESTS = gql`query tests {
 
 function ListTests() {
     const [testsListData, setTestsData] = useState()
+    let v = {};
     const {loading, error, data} = useQuery(GET_TESTS, {
         onCompleted(data) {
             setTestsData(data)
+            v = data;
         }
     });
     if (loading) return null;
@@ -23,7 +25,6 @@ function ListTests() {
 
     function createTestButton() {
         const state = checkIfLoggedIn();
-        console.log(state)
         if (!state.docente) return (<div></div>)
 
         return (
@@ -67,7 +68,7 @@ function ListTests() {
 
 
 
-                <TestObject data={testsListData.tests}/>
+                <TestObject data={testsListData?.tests}/>
 
             </div>
         </Box>

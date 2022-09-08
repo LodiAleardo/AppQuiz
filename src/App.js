@@ -4,6 +4,12 @@ import './App.css';
 import Routing from "./utilities/Routes";
 import {AppBar, Box, Button, ListItemText, Menu, MenuItem, TextField, Toolbar, Typography} from "@mui/material";
 import checkIfLoggedIn from "./UserState";
+import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
+import ListTests from "./interface/ListTests";
+import Login from "./utilities/Login";
+import CreateTest from "./test/CreateTest";
+import TestExecutor from "./test/TestExecutor";
+import RisultatoTest from "./interface/RisultatoTests";
 
 function App() {
     checkIfLoggedIn();
