@@ -17,9 +17,27 @@ function App() {
     const renderState = () => {
         const state = checkIfLoggedIn();
         console.log(state)
-        if(state.sub) return "Logged in";
+        if (state.sub) return "Logged in";
 
         return "Not logged in";
+    }
+
+    const renderLogOut = () => {
+        const state = checkIfLoggedIn();
+        console.log(state)
+        if (!state.sub) return (<div></div>);
+
+        return (<Button variant="contained"
+                        disableElevation
+                        onClick={() => {
+                            sessionStorage.removeItem('token');
+                            window.location.href = "/login";
+                        }}
+                        // color="error"
+            >
+                Log-out
+            </Button>
+        );
     }
 
 
@@ -27,16 +45,18 @@ function App() {
         <div>
             <AppBar position="static" color="primary">
                 <Toolbar>
-                    <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1 }}>
+                    <Typography variant="h6" noWrap component="div" sx={{flexGrow: 1}}>
                         Test suite
                     </Typography>
+                    {renderLogOut()}
+
                     {renderState()}
 
                 </Toolbar>
 
             </AppBar>
 
-            <Routing />
+            <Routing/>
 
         </div>
     );

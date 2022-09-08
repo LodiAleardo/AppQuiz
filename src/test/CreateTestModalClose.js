@@ -26,6 +26,8 @@ const CREA_TEST = gql`mutation creaTest ($test: TestInput!) {
 function CreateTestModalClose(props) {
     let data = props.data;
     let triggerClose = props.triggerClose;
+    const [existsThisName, setExistsThisName] = useState(false);
+    const [helperText, setHelperText] = useState("");
     const [ordineCasuale, setOrdineCasuale] = useState(false);
     const [domandeConNumero, setDomandeConNumero] = useState(false);
 
@@ -34,7 +36,13 @@ function CreateTestModalClose(props) {
     const [creaTest, {err_tst, load_tst, data_tst}] = useMutation(CREA_TEST, {
         onCompleted(data_tst) {
             console.log(data_tst);
+            if(data_tst.creaTest === null){
+                setExistsThisName(true);
+                setHelperText("Devi cambiare il nome del test, esiste giá.");
+                return;
+            }
             window.location.href = "/test";
+
         }
     });
 
@@ -77,7 +85,9 @@ function CreateTestModalClose(props) {
                                fullWidth
                                label="Nome del test"
                                variant="filled"
+                               error={existsThisName}
                                value={nomeDelTest}
+                               helperText={helperText}
                                onChange={e => setNomeDelTest(e.target.value)}
                     />
 

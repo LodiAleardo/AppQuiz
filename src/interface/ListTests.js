@@ -13,11 +13,9 @@ const GET_TESTS = gql`query tests {
 
 function ListTests() {
     const [testsListData, setTestsData] = useState()
-    let v = {};
     const {loading, error, data} = useQuery(GET_TESTS, {
         onCompleted(data) {
             setTestsData(data)
-            v = data;
         }
     });
     if (loading) return null;

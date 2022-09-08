@@ -27,7 +27,7 @@ async function loginUser(credentials) {
 function Login() {
     const [username, setUserName] = useState();
     const [password, setPassword] = useState();
-    localStorage.removeItem('token');
+    sessionStorage.removeItem('token');
 
     const handleSubmit = async e => {
         e.preventDefault();
