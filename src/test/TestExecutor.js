@@ -134,7 +134,7 @@ function TestExecutor() {
     const {ots_lad, ots_erro, ots_data} = useQuery(OLD_TEST_RUNS, {
         variables: {user: checkIfLoggedIn().sub},
         onCompleted(ots_data) {
-            console.log(ots_data);
+            // console.log(ots_data);
 
             if (ots_data.testRuns.length === 0) {
                 get_fresh_test_data().then(r => {
@@ -156,7 +156,7 @@ function TestExecutor() {
             }
 
             tmp_arr = tmp_arr.reduce((max, game) => max.dataInizio > game.dataInizio ? max : game);
-            console.log(tmp_arr)
+            // console.log(tmp_arr)
 
             let single_test_data = structuredClone(tmp_arr);
             setID(single_test_data.id);
@@ -168,7 +168,7 @@ function TestExecutor() {
             setCompleteData(single_test_data.test);
 
             if (single_test_data.id === 0) {
-                console.log("Qualcosa")
+                // console.log("Qualcosa")
             }
 
             single_test_data.test.domande[0].risposte.forEach((risposta, index) => {

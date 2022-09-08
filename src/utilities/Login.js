@@ -3,7 +3,7 @@ import ListTests from "../interface/ListTests";
 import {Box, Button, Grid, TextField} from "@mui/material";
 
 async function loginUser(credentials) {
-    console.log(credentials);
+    // console.log(credentials);
     return fetch('http://localhost:8080/login', {
         method: 'POST',
         headers: {
@@ -13,7 +13,7 @@ async function loginUser(credentials) {
     }).then(async response => {
         const status = response.headers.get("status");
         if (status === 200) {
-            console.log(response.json());
+            // console.log(response.json());
             sessionStorage.setItem('token', "OK");
         }
         const data = await response.json();
@@ -35,7 +35,7 @@ function Login() {
             username,
             password
         });
-        console.log(token)
+        // console.log(token)
         if (token) {
             return (<ListTests/>);
 

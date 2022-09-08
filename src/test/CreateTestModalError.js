@@ -30,7 +30,7 @@ function CreateModalsErrors(props) {
                     Errore nei dati inseriti
                 </Typography>
                 <Typography id="modal-modal-description" sx={{mt: 2}}>
-                    La domanda o alcune risposte sono vuote. Per favore compila i campi correttamente.
+                    La domanda o alcuni punteggi o le risposte sono vuote. Per favore compila i campi correttamente.
                 </Typography>
             </Box>
         </Modal>

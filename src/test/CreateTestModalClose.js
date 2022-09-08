@@ -35,7 +35,7 @@ function CreateTestModalClose(props) {
 
     const [creaTest, {err_tst, load_tst, data_tst}] = useMutation(CREA_TEST, {
         onCompleted(data_tst) {
-            console.log(data_tst);
+            // console.log(data_tst);
             if(data_tst.creaTest === null){
                 setExistsThisName(true);
                 setHelperText("Devi cambiare il nome del test, esiste giá.");

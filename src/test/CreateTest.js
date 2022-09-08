@@ -58,7 +58,7 @@ function CreateTest() {
     const [creaDomanda, {err_cd, load_cd, data_cd}] = useMutation(CREA_DOMANDA, {
         // variables: {data, nome},
         onCompleted(data_cd) {
-            console.log(data_cd);
+            // console.log(data_cd);
             setListaDomande([...listDomande, data_cd.creaDomanda.nome]);
             setResponse([{"text": "", "id": 0, "value": 0},
                 {"text": "", "id": 1, "value": 0}]);

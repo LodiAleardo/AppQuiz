@@ -16,7 +16,7 @@ function App() {
 
     const renderState = () => {
         const state = checkIfLoggedIn();
-        console.log(state)
+        // console.log(state)
         if (state.sub) return "Logged in";
 
         return "Not logged in";
@@ -24,7 +24,7 @@ function App() {
 
     const renderLogOut = () => {
         const state = checkIfLoggedIn();
-        console.log(state)
+        // console.log(state)
         if (!state.sub) return (<div></div>);
 
         return (<Button variant="contained"
