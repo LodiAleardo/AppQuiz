@@ -41,6 +41,7 @@ function CreateTest() {
 
     const [listDomande, setListaDomande] = useState([])
 
+    const [punteggioDomanda, setPunteggioDomanda] = useState(1)
     const [question, setQuestion] = useState("")
     const [maxValue, setMaxValue] = useState(2)
     const [modalErrorState, setModalErrorState] = useState(false);
@@ -100,7 +101,7 @@ function CreateTest() {
                 "domanda": {
                     "nome": uuidv4(),
                     "testo": question.toString(),
-                    "punti": 1,
+                    "punti": punteggioDomanda,
                     "ordineCasuale": ordineCasuale,
                     "risposteConNumero": risposteConNumero,
                     "risposte": risposte
@@ -192,6 +193,16 @@ function CreateTest() {
                                                   label="Risposte con numero"
                                                   checked={risposteConNumero}
                                                   onChange={e => setResponseWithNumber(!risposteConNumero)}/>
+
+                            </Grid>
+                            <Grid item xs={12}>
+                                <TextField id="outlined-number"
+                                           value={punteggioDomanda}
+                                           fullWidth
+                                           onChange={e => setPunteggioDomanda(e.target.value)}
+                                           InputProps={{inputProps: {min: 1}}}
+                                           label="Punteggio domanda"
+                                           type="number"/>
 
                             </Grid>
                         </Grid>
