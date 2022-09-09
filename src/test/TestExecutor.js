@@ -281,7 +281,7 @@ function TestExecutor() {
                  //     fontWeight: '700',
              }}
         >
-            <h1>{name}</h1>
+            {/*<h1>{name}</h1>*/}
 
             <FormControl onSubmit={handleSubmit}>
                 <FormLabel>{renderNumeroDomanda()}{question.testo}</FormLabel>
