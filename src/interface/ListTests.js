@@ -37,9 +37,9 @@ function ListTests() {
                  // boxShadow: 3,
                  // width: '25%',
                  // height: '25%',
-                 bgcolor: (theme) => (theme.palette.mode === 'dark' ? '#101010' : '#fff'),
-                 color: (theme) =>
-                     theme.palette.mode === 'dark' ? 'grey.300' : 'grey.800',
+                 // bgcolor: (theme) => (theme.palette.mode === 'dark' ? '#101010' : '#fff'),
+                 // color: (theme) =>
+                 //     theme.palette.mode === 'dark' ? 'grey.300' : 'grey.800',
                  p: 1,
                  m: 2,
                  borderRadius: 2,
